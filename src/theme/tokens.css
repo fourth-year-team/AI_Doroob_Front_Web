@@ -71,48 +71,48 @@
 
 :root[data-theme='light'] {
   /* Neutrals — warm off-white base to complement Amber, cards stay white */
-  --bg: #f9fafb;
-  --bg-elevated: #f3f4f6;
+  --bg: #FFF4EA;
+  --bg-elevated: #FFE9D6;
   --surface: #ffffff;
-  --surface-2: #f7f7f4;
-  --surface-3: #f1f0ec;
-  --surface-hover: #fefce8;
-  --border: #e5e7eb;
-  --border-strong: #d6d3d1;
+  --surface-2: #FAF0E6;
+  --surface-3: #F3E5D8;
+  --surface-hover: #FFE9D6;
+  --border: #EADACD;
+  --border-strong: #D8C3B3;
 
   /* Text — warm stone scale */
-  --text: #1c1917;
-  --text-secondary: #57534e;
-  --muted: #78716c;
-  --muted-2: #a8a29e;
+  --text: #050F24;
+  --text-secondary: #6F757E;
+  --muted: #888E99;
+  --muted-2: #A8AEB8;
 
   /* Brand — Amber (primary) */
-  --primary: #f59e0b;
-  --primary-hover: #d97706;
-  --primary-dark: #b45309;
-  --primary-soft: rgba(245, 158, 11, 0.12);
-  --primary-border: rgba(245, 158, 11, 0.4);
+  --primary: #FF8E29;
+  --primary-hover: #E0781A;
+  --primary-dark: #B85F10;
+  --primary-soft: rgba(255, 142, 41, 0.12);
+  --primary-border: rgba(255, 142, 41, 0.35);
   --on-primary: #ffffff;
 
   /* Semantic state colors (Match/Clean = Green, Mismatch/Fraud = Red) */
   --success: #16a34a;
-  --success-soft: rgba(34, 197, 94, 0.1);
-  --success-border: rgba(34, 197, 94, 0.34);
+  --success-soft: rgba(22, 163, 74, 0.1);
+  --success-border: rgba(22, 163, 74, 0.34);
   --danger: #dc2626;
-  --danger-soft: rgba(239, 68, 68, 0.08);
-  --danger-border: rgba(239, 68, 68, 0.32);
-  --warning: #d97706;
-  --warning-soft: rgba(245, 158, 11, 0.12);
-  --warning-border: rgba(245, 158, 11, 0.36);
-  --info: #44403c;
-  --info-dark: #292524;
-  --info-soft: rgba(68, 64, 60, 0.08);
-  --info-border: rgba(68, 64, 60, 0.28);
-  --neutral-soft: rgba(120, 113, 108, 0.08);
+  --danger-soft: rgba(220, 38, 38, 0.08);
+  --danger-border: rgba(220, 38, 38, 0.32);
+  --warning: #FF8E29;
+  --warning-soft: rgba(255, 142, 41, 0.12);
+  --warning-border: rgba(255, 142, 41, 0.36);
+  --info: #050F24;
+  --info-dark: #000000;
+  --info-soft: rgba(5, 15, 36, 0.08);
+  --info-border: rgba(5, 15, 36, 0.28);
+  --neutral-soft: rgba(111, 117, 126, 0.1);
 
   --on-success: #ffffff;
   --on-danger: #ffffff;
-  --on-warning: #1a1206;
+  --on-warning: #FFFFFF;
   --on-info: #ffffff;
 
   /* Header stays a dark diagnostic band */
@@ -122,7 +122,7 @@
 
   --shadow: 0 8px 22px -12px rgba(180, 83, 9, 0.18);
   --shadow-sm: 0 1px 3px -1px rgba(180, 83, 9, 0.14);
-  --code-bg: #f1f0ec;
+  --code-bg: #FAF0E6;
 
   --accent: var(--primary);
   --accent-hover: var(--primary-hover);
