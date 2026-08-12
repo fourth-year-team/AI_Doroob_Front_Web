@@ -1,0 +1,233 @@
+/* ============================================================
+   AegisVerify — Centralized theme tokens (automotive / CV / AI identity)
+   Dark is the primary experience. Dark & Light only change tokens.
+   ============================================================ */
+
+:root,
+:root[data-theme='dark'] {
+  /* Neutrals */
+  --bg: #0a0f16;
+  --bg-elevated: #0c1420;
+  --surface: #111923;
+  --surface-2: #151f2b;
+  --surface-3: #1a2735;
+  --surface-hover: #1a2735;
+  --border: #263545;
+  --border-strong: #34475c;
+
+  /* Text */
+  --text: #e8f0f7;
+  --text-secondary: #91a4b5;
+  --muted: #647789;
+  --muted-2: #4d5f70;
+
+  /* Brand — automotive-tech cyan (primary) */
+  --primary: #18b6d9;
+  --primary-hover: #0ea5c4;
+  --primary-dark: #0e7e96;
+  --primary-soft: rgba(24, 182, 217, 0.14);
+  --primary-border: rgba(24, 182, 217, 0.42);
+  --on-primary: #061c24;
+
+  /* Semantic state colors */
+  --success: #22c55e;
+  --success-soft: rgba(34, 197, 94, 0.14);
+  --success-border: rgba(34, 197, 94, 0.42);
+  --danger: #ef4444;
+  --danger-soft: rgba(239, 68, 68, 0.14);
+  --danger-border: rgba(239, 68, 68, 0.42);
+  --warning: #f59e0b;
+  --warning-soft: rgba(245, 158, 11, 0.14);
+  --warning-border: rgba(245, 158, 11, 0.42);
+  --info: #3b82f6;
+  --info-dark: #2563eb;
+  --info-soft: rgba(59, 130, 246, 0.14);
+  --info-border: rgba(59, 130, 246, 0.42);
+  --neutral-soft: rgba(145, 164, 181, 0.12);
+
+  /* Text on solid semantic fills */
+  --on-success: #05270f;
+  --on-danger: #1f0707;
+  --on-warning: #1e1607;
+  --on-info: #0a1428;
+
+  /* Header — dark diagnostic console band (both themes) */
+  --header-bg: #0a0f16;
+  --header-text: #e8f0f7;
+  --header-muted: #91a4b5;
+
+  /* Shadows / radii / misc */
+  --shadow: 0 8px 24px -10px rgba(0, 0, 0, 0.5);
+  --shadow-sm: 0 1px 3px -1px rgba(0, 0, 0, 0.45);
+  --code-bg: #0a0f16;
+
+  /* Back-compat aliases (accent == primary) */
+  --accent: var(--primary);
+  --accent-hover: var(--primary-hover);
+  --accent-dark: var(--primary-dark);
+  --accent-soft: var(--primary-soft);
+  --accent-border: var(--primary-border);
+}
+
+:root[data-theme='light'] {
+  /* Neutrals — cool steel gray, never pure white background */
+  --bg: #e8edf2;
+  --bg-elevated: #dfe6ec;
+  --surface: #ffffff;
+  --surface-2: #f3f6f8;
+  --surface-3: #eaeff4;
+  --surface-hover: #f8fafc;
+  --border: #d2dce5;
+  --border-strong: #b9c6d2;
+
+  /* Text */
+  --text: #17232d;
+  --text-secondary: #536575;
+  --muted: #718391;
+  --muted-2: #95a3af;
+
+  /* Brand — automotive-tech cyan (primary) */
+  --primary: #0789a8;
+  --primary-hover: #06758f;
+  --primary-dark: #066c84;
+  --primary-soft: rgba(7, 137, 168, 0.1);
+  --primary-border: rgba(7, 137, 168, 0.34);
+  --on-primary: #ffffff;
+
+  /* Semantic state colors */
+  --success: #16a34a;
+  --success-soft: rgba(34, 197, 94, 0.1);
+  --success-border: rgba(34, 197, 94, 0.34);
+  --danger: #dc2626;
+  --danger-soft: rgba(239, 68, 68, 0.08);
+  --danger-border: rgba(239, 68, 68, 0.32);
+  --warning: #d97706;
+  --warning-soft: rgba(245, 158, 11, 0.12);
+  --warning-border: rgba(245, 158, 11, 0.36);
+  --info: #2563eb;
+  --info-dark: #1d4ed8;
+  --info-soft: rgba(59, 130, 246, 0.1);
+  --info-border: rgba(59, 130, 246, 0.32);
+  --neutral-soft: rgba(83, 101, 117, 0.08);
+
+  --on-success: #ffffff;
+  --on-danger: #ffffff;
+  --on-warning: #1a1206;
+  --on-info: #ffffff;
+
+  /* Header stays a dark diagnostic band */
+  --header-bg: #0a0f16;
+  --header-text: #e8f0f7;
+  --header-muted: #91a4b5;
+
+  --shadow: 0 8px 22px -12px rgba(23, 35, 45, 0.18);
+  --shadow-sm: 0 1px 3px -1px rgba(23, 35, 45, 0.12);
+  --code-bg: #eaeff4;
+
+  --accent: var(--primary);
+  --accent-hover: var(--primary-hover);
+  --accent-dark: var(--primary-dark);
+  --accent-soft: var(--primary-soft);
+  --accent-border: var(--primary-border);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family:
+    'Inter',
+    'Segoe UI',
+    system-ui,
+    -apple-system,
+    'Helvetica Neue',
+    Arial,
+    'Noto Sans',
+    'Noto Kufi Arabic',
+    'Segoe UI Arabic',
+    sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease;
+}
+
+[dir='rtl'] body {
+  font-family:
+    'Noto Kufi Arabic',
+    'Segoe UI Arabic',
+    'Inter',
+    'Segoe UI',
+    system-ui,
+    -apple-system,
+    sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+}
+
+code {
+  font-family: 'JetBrains Mono', 'Cascadia Code', Consolas, monospace;
+}
+
+::selection {
+  background: var(--primary-soft);
+}
+
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.mono {
+  font-family: 'JetBrains Mono', 'Cascadia Code', Consolas, monospace;
+  font-variant-numeric: tabular-nums;
+}

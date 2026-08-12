@@ -1,0 +1,94 @@
+{
+  "bookings": [
+    {
+      "video_id": "VID-001",
+      "video_path": "videos/vid001.mp4",
+      "plate_declared": "KLM-8832",
+      "model_declared": "Toyota Corolla",
+      "color_declared": "White",
+      "scenario_type": "clean",
+      "description": "Clean scenario - booking matches vehicle",
+      "duration": "6s",
+      "demo": {
+        "actual_plate": "KLM-8832",
+        "actual_model": "Toyota Corolla",
+        "actual_color": "White"
+      }
+    },
+    {
+      "video_id": "VID-002",
+      "video_path": "videos/vid002.mp4",
+      "plate_declared": "QWE-2245",
+      "model_declared": "Honda Accord",
+      "color_declared": "Black",
+      "scenario_type": "clean",
+      "description": "Clean scenario - booking matches vehicle",
+      "duration": "6s",
+      "demo": {
+        "actual_plate": "QWE-2245",
+        "actual_model": "Honda Accord",
+        "actual_color": "Black"
+      }
+    },
+    {
+      "video_id": "VID-003",
+      "video_path": "videos/vid003.mp4",
+      "plate_declared": "KLM-8832",
+      "model_declared": "Toyota Corolla",
+      "color_declared": "Blue",
+      "scenario_type": "fraud",
+      "description": "Fraud: declared Blue, actual vehicle is Red (color mismatch)",
+      "duration": "6s",
+      "demo": {
+        "actual_plate": "KLM-8832",
+        "actual_model": "Toyota Corolla",
+        "actual_color": "Red"
+      }
+    },
+    {
+      "video_id": "VID-004",
+      "video_path": "videos/vid004.mp4",
+      "plate_declared": "KLM-8832",
+      "model_declared": "Toyota Corolla",
+      "color_declared": "White",
+      "scenario_type": "fraud",
+      "description": "Fraud: declared Toyota Corolla, actual vehicle is Honda Civic (model mismatch)",
+      "duration": "6s",
+      "demo": {
+        "actual_plate": "KLM-8832",
+        "actual_model": "Honda Civic",
+        "actual_color": "White"
+      }
+    },
+    {
+      "video_id": "VID-005",
+      "video_path": "videos/vid005.mp4",
+      "plate_declared": "ABC-9999",
+      "model_declared": "Toyota Corolla",
+      "color_declared": "White",
+      "scenario_type": "fraud",
+      "description": "Fraud: declared plate ABC-9999, actual plate is different (plate mismatch)",
+      "duration": "6s",
+      "demo": {
+        "actual_plate": "KLM-8832",
+        "actual_model": "Toyota Corolla",
+        "actual_color": "White"
+      }
+    },
+    {
+      "video_id": "VID-006",
+      "video_path": "videos/vid006.mp4",
+      "plate_declared": "XYZ-0000",
+      "model_declared": "Toyota Corolla",
+      "color_declared": "White",
+      "scenario_type": "unclear",
+      "description": "Plate unreadable in video - manual review required",
+      "duration": "6s",
+      "demo": {
+        "actual_plate": "",
+        "actual_model": "Toyota Corolla",
+        "actual_color": "White"
+      }
+    }
+  ]
+}
