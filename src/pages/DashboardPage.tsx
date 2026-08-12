@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useI18n } from '../i18n';
-import { useData } from '../state/DataContext';
+import { useData, errorI18nKey } from '../state/DataContext';
 import { storage } from '../services/storage';
 import { StatCard } from '../components/common/StatCard';
 import { Section } from '../components/common/Section';
@@ -106,7 +106,7 @@ export function DashboardPage() {
         <div className="error-banner" role="alert">
           <Icon name="alert" size={16} />
           <div style={{ flex: 1 }}>
-            {t(`analysis.${lastError === 'no-frames' ? 'errorNoFrames' : lastError === 'unsupported' ? 'errorUnsupported' : 'errorInvalidVideo'}`)}
+            {t(errorI18nKey(lastError))}
             <button className="btn btn--sm btn--ghost" style={{ marginInlineStart: 12 }} onClick={clearError}>
               {t('actions.close')}
             </button>

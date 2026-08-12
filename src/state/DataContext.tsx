@@ -7,6 +7,7 @@ import React, {
   useState,
 } from 'react';
 import mockData from '../data/mock-bookings.json';
+import type { I18nKey } from '../i18n';
 import type {
   AnalysisSettings,
   AnalysisSession,
@@ -17,7 +18,8 @@ import type {
 } from '../types';
 import { storage } from '../services/storage';
 import { loadSettings, DEFAULT_SETTINGS } from '../services/settings';
-import { runAnalysis } from '../services/analysisRunner';
+import { buildAnalysisRequest, mapResponseToSessionRecord } from '../services/api/mapping';
+import { createAnalysisService } from '../services/api/analysisService';
 import { bookingsFromCsv } from '../services/importExport';
 
 interface FilterState {
@@ -78,7 +80,23 @@ export function errorCodeFrom(err: unknown): string {
   const msg = err instanceof Error ? err.message : String(err);
   if (msg.includes('no-frames')) return 'no-frames';
   if (msg.includes('mp4') || msg.includes('format')) return 'unsupported';
+  if (msg.includes('missing-booking')) return 'missing-booking';
+  if (msg.includes('model-failure')) return 'model-failure';
+  if (msg.includes('empty-result')) return 'empty-result';
   return 'invalid-video';
+}
+
+const ERROR_I18N_KEY: Record<string, I18nKey> = {
+  'no-frames': 'analysis.errorNoFrames',
+  unsupported: 'analysis.errorUnsupported',
+  'missing-booking': 'analysis.errorMissingBooking',
+  'model-failure': 'analysis.errorModelFailure',
+  'empty-result': 'analysis.errorEmptyResult',
+  'invalid-video': 'analysis.errorInvalidVideo',
+};
+
+export function errorI18nKey(code: string): I18nKey {
+  return ERROR_I18N_KEY[code] ?? 'analysis.errorInvalidVideo';
 }
 
 export function DataProvider({ children }: { children: React.ReactNode }) {
@@ -119,6 +137,14 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
       });
     },
     [customBookings, sessions],
+  );
+
+  const service = useMemo(
+    () =>
+      createAnalysisService({
+        resolveBooking: (videoId: string) => bookings.find((b) => b.video_id === videoId),
+      }),
+    [bookings],
   );
 
   const filteredBookings = useMemo(() => {
@@ -162,18 +188,23 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
     async (booking: Booking): Promise<SessionRecord> => {
       setLastError(null);
       const activeSettings = storage.getSettings() ?? loadSettings();
+      const request = buildAnalysisRequest(booking, activeSettings);
       setRunning({
         videoId: booking.video_id,
         progress: { stage: 'idle', percent: 0, message: '' },
         batch: null,
       });
       try {
-        const record = await runAnalysis({
-          booking,
-          settings: activeSettings,
-          onProgress: (progress) =>
-            setRunning({ videoId: booking.video_id, progress, batch: null }),
-        });
+        const response = await service.analyze(request, (progress) =>
+          setRunning({ videoId: booking.video_id, progress, batch: null }),
+        );
+        if (response.status !== 'completed') {
+          throw new Error(response.error ?? 'empty-result');
+        }
+        const record = mapResponseToSessionRecord(response, request);
+        storage.saveFrames(record.frames);
+        storage.saveAggregated(record.aggregated);
+        storage.saveSession(record.session);
         refreshSessions();
         return record;
       } catch (err) {
@@ -199,7 +230,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
         setRunning((r) => (r?.videoId === booking.video_id ? null : r));
       }
     },
-    [refreshSessions],
+    [refreshSessions, service],
   );
 
   const runBatch = useCallback(
@@ -214,17 +245,22 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
       let index = 0;
       for (const booking of batch) {
         const activeSettings = storage.getSettings() ?? loadSettings();
+        const request = buildAnalysisRequest(booking, activeSettings);
         try {
-          const record = await runAnalysis({
-            booking,
-            settings: activeSettings,
-            onProgress: (progress) =>
-              setRunning({
-                videoId: booking.video_id,
-                progress,
-                batch: { total: batch.length, done: index },
-              }),
-          });
+          const response = await service.analyze(request, (progress) =>
+            setRunning({
+              videoId: booking.video_id,
+              progress,
+              batch: { total: batch.length, done: index },
+            }),
+          );
+          if (response.status !== 'completed') {
+            throw new Error(response.error ?? 'empty-result');
+          }
+          const record = mapResponseToSessionRecord(response, request);
+          storage.saveFrames(record.frames);
+          storage.saveAggregated(record.aggregated);
+          storage.saveSession(record.session);
           records.push(record);
         } catch {
           /* failed session already stored */
@@ -244,7 +280,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
       setRunning(null);
       return records;
     },
-    [refreshSessions],
+    [refreshSessions, service],
   );
 
   const getSessionRecord = useCallback(

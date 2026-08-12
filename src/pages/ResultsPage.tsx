@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useI18n, type I18nKey } from '../i18n';
-import { useData } from '../state/DataContext';
+import { useData, errorI18nKey } from '../state/DataContext';
 import { decide } from '../services/decisionEngine';
 import { DecisionBanner } from '../components/results/DecisionBanner';
 import { FrameStrip } from '../components/results/FrameStrip';
@@ -44,6 +44,36 @@ export function ResultsPage() {
         <EmptyState
           icon="warning"
           title={t('results.sessionNotFound')}
+          action={
+            <Link className="btn btn--soft btn--sm" to="/">
+              <Icon name="arrow" size={14} />
+              {t('nav.dashboard')}
+            </Link>
+          }
+        />
+      </div>
+    );
+  }
+
+  if (record.session.status === 'failed') {
+    return (
+      <div className="stack">
+        <div className="page-hero">
+          <span className="eyebrow">
+            <Icon name="video" size={13} />
+            {record.session.video_id}
+          </span>
+          <h1>{t('results.title')}</h1>
+        </div>
+        <div className="error-banner" role="alert">
+          <Icon name="alert" size={16} />
+          <div style={{ flex: 1 }}>
+            {t(errorI18nKey(record.session.error ?? 'invalid-video'))}
+          </div>
+        </div>
+        <EmptyState
+          icon="warning"
+          title={t('analysis.failed')}
           action={
             <Link className="btn btn--soft btn--sm" to="/">
               <Icon name="arrow" size={14} />

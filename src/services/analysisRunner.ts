@@ -28,6 +28,8 @@ export interface RunAnalysisOptions {
   booking: Booking;
   settings: AnalysisSettings;
   onProgress?: (progress: AnalysisProgress) => void;
+  /** When false, results are returned but not persisted to local storage. Defaults to true. */
+  persist?: boolean;
 }
 
 function makeId(): string {
@@ -54,7 +56,7 @@ function setProgress(
 }
 
 export async function runAnalysis(opts: RunAnalysisOptions): Promise<SessionRecord> {
-  const { booking, settings, onProgress } = opts;
+  const { booking, settings, onProgress, persist = true } = opts;
   const sessionId = makeId();
 
   setProgress(onProgress, { stage: 'loading-video', percent: 4, message: 'loading' });
@@ -186,9 +188,11 @@ export async function runAnalysis(opts: RunAnalysisOptions): Promise<SessionReco
       : undefined,
   };
 
-  storage.saveFrames(frameResults);
-  storage.saveAggregated(aggregatedResults);
-  storage.saveSession(session);
+  if (persist) {
+    storage.saveFrames(frameResults);
+    storage.saveAggregated(aggregatedResults);
+    storage.saveSession(session);
+  }
 
   setProgress(onProgress, { stage: 'done', percent: 100, message: 'done' });
 
